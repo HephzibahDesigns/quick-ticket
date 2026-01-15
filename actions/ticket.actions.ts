@@ -50,6 +50,19 @@ export const createTicket = async (
 // get tickets actions
 export const getTickets = async () => {
   try {
-    const tickets = await prisma;
-  } catch (error) {}
+    const tickets = await prisma.ticket.findMany({
+      orderBy: { createdAt: "desc" },
+    });
+
+    Sentry.addBreadcrumb({
+      message: `Fetched ticket list: ${tickets.length}`,
+      category: "ticket",
+      level: "info",
+    });
+
+    return tickets;
+  } catch (error) {
+    Sentry.captureException(error as Error);
+    return [];
+  }
 };
