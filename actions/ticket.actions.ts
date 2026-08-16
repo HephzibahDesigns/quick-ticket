@@ -54,15 +54,37 @@ export const getTickets = async () => {
       orderBy: { createdAt: "desc" },
     });
 
-    Sentry.addBreadcrumb({
-      message: `Fetched ticket list: ${tickets.length}`,
-      category: "ticket",
-      level: "info",
-    });
-
     return tickets;
   } catch (error) {
     Sentry.captureException(error as Error);
     return [];
+  }
+};
+
+// get each of the tickets by id
+export const getTicketById = async (id: string) => {
+  try {
+    const ticketId = await prisma.ticket.findUnique({
+      where: {
+        id: Number(id),
+      },
+    });
+
+    if (!ticketId) {
+      Sentry.addBreadcrumb({
+        message: `Ticket Not Found: ${id}`,
+        category: "ticket",
+        level: "warning",
+      });
+    }
+
+    return ticketId;
+  } catch (error) {
+    Sentry.addBreadcrumb({
+      message: `Error Fetching ticket details: ${id}`,
+      category: "ticket",
+      level: "error",
+    });
+    return;
   }
 };

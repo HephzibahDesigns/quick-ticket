@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Roboto, Poppins } from "next/font/google";
 import "./globals.css";
 import ToastProvider from "@/providers/toast-provider";
+import Navbar from "./components/Navbar";
 
 const robotoSans = Roboto({
   variable: "--font-roboto-sans",
@@ -28,6 +29,7 @@ export default function RootLayout({
       <body
         className={`${robotoSans.variable} ${poppinsSans.variable} antialiased`}
       >
+        <Navbar />
         {children}
         <ToastProvider />
       </body>

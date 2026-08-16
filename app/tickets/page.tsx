@@ -1,22 +1,9 @@
 import { getTickets } from "@/actions/ticket.actions";
 import Link from "next/link";
+import { priorityColor } from "@/utils/ui";
 
 const ViewTicketsPage = async () => {
   const tickets = await getTickets();
-
-  const priorityColor = (priority: string) => {
-    switch (priority) {
-      case "High":
-        return "text-red-600 font-semibold";
-      case "Medium":
-        return "text-yellow-600 font-semibold";
-      case "Low":
-        return "text-green-600 font-semibold";
-      default:
-        return "text-gray-500";
-    }
-  };
-
   return (
     <div className="min-h-screen bg-blue-50 px-4 sm:px-8 py-8">
       <h1 className="text-3xl sm:text-4xl font-bold text-blue-600 mb-8 text-center font-poppins">
