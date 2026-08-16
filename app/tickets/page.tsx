@@ -2,8 +2,18 @@ import { getTickets } from "@/actions/ticket.actions";
 import Link from "next/link";
 import { priorityColor } from "@/utils/ui";
 
+type Ticket = {
+  id: number;
+  subject: string;
+  description: string;
+  priority: string;
+  status: string;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
 const ViewTicketsPage = async () => {
-  const tickets = await getTickets();
+  const tickets: Ticket[] = await getTickets();
   return (
     <div className="min-h-screen bg-blue-50 px-4 sm:px-8 py-8">
       <h1 className="text-3xl sm:text-4xl font-bold text-blue-600 mb-8 text-center font-poppins">
@@ -16,7 +26,7 @@ const ViewTicketsPage = async () => {
         </p>
       ) : (
         <div className="space-y-4 max-w-3xl mx-auto">
-          {tickets.map((ticket) => (
+          {tickets.map((ticket: Ticket) => (
             <div
               key={ticket.id}
               className="flex flex-col sm:flex-row sm:items-center sm:justify-between bg-white rounded-lg shadow border border-gray-200 p-4 sm:p-6 gap-4"
